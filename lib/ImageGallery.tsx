@@ -1,8 +1,10 @@
 import * as React from "react";
-import { View, StyleProp, ViewStyle } from "react-native";
+import { View, StyleProp, FlatList, ViewStyle } from "react-native";
 import Spinner from "react-native-spinkit";
 import StateView from "react-native-easy-state-view";
-import RNBounceable from "@freakycoder/react-native-bounceable"
+import ProgressiveFastImage from "@freakycoder/react-native-progressive-fast-image";
+
+import RNBounceable from "@freakycoder/react-native-bounceable";
 /**
  * ? Local Imports
  */
@@ -12,27 +14,24 @@ type CustomStyleProp = StyleProp<ViewStyle> | Array<StyleProp<ViewStyle>>;
 
 interface IImageGalleryProps {
   style?: CustomStyleProp;
+  data: Array<any>;
+  onPress: (index: number) => void;
 }
 
-const ImageGallery: React.FC<IImageGalleryProps> = ({ style }) => {
-  const [images, setImages] = React.useState<Array<ITaskImage>>(null);
-
-  // ? Lifecycle: componentDidMount
-  React.useEffect(() => {
-    // fetchImages(taskId).then((imageList: Array<ITaskImage>) =>
-    //   setImages(imageList),
-    // );
-  }, []);
-
+const ImageGallery: React.FC<IImageGalleryProps> = ({
+  style,
+  data,
+  onPress,
+}) => {
   const renderStateView = () => (
     <View style={styles.stateViewContainer}>
       <StateView
         isCenter
-        shadowColor={colors.gray.medium}
-        title={localStrings.nothingFound}
+        shadowColor="#757575"
+        title="Nothing found"
         imageStyle={styles.stateViewImageStyle}
-        subtitle={localStrings.nothingFoundDesc}
-        imageSource={require("assets/states/files_and_folder.png")}
+        subtitle="We could not find anything in there"
+        imageSource={require("./state-images.png")}
       />
     </View>
   );
@@ -40,22 +39,29 @@ const ImageGallery: React.FC<IImageGalleryProps> = ({ style }) => {
   const renderItem = (data: any) => {
     const { item, index } = data;
     return (
-      <Androw style={styles.photoShadowStyle}>
-        <TouchableOpacity onPress={() => navigateToSelectedImageGallery(index)}>
-          <Image
-            key={index}
-            borderRadius={16}
-            source={{ uri: item.thumb }}
-            style={styles.photoImageStyle}
-          />
-        </TouchableOpacity>
-      </Androw>
+      <RNBounceable
+        style={styles.photoShadowStyle}
+        onPress={() => onPress(index)}
+      >
+        <ProgressiveFastImage
+          key={index}
+          borderRadius={16}
+          source={item.source}
+          // resizeMode="contain"
+          style={styles.photoImageStyle}
+          errorSource={require("./default-image.png")}
+          loadingSource={{
+            uri:
+              "https://thumbs.gfycat.com/GrimyPlainKakarikis-size_restricted.gif",
+          }}
+        />
+      </RNBounceable>
     );
   };
 
   const renderImageList = () => (
     <FlatList
-      data={images}
+      data={data}
       numColumns={3}
       renderItem={renderItem}
       contentInsetAdjustmentBehavior="automatic"
@@ -70,8 +76,8 @@ const ImageGallery: React.FC<IImageGalleryProps> = ({ style }) => {
   );
 
   const renderImageGallery = () => {
-    if (images === null) return renderSpinner();
-    else if (images && images.length > 0)
+    if (data === null) return renderSpinner();
+    else if (data && data.length > 0)
       return <View style={styles.listContainer}>{renderImageList()}</View>;
     else return renderStateView();
   };

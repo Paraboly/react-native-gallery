@@ -5,6 +5,7 @@ import { CustomImageStyleProps } from "@freakycoder/react-native-progressive-fas
 interface Style {
   container: ViewStyle;
   photoListContentInset: Insets;
+  listContainer: ViewStyle;
   stateViewContainer: ViewStyle;
   stateViewImageStyle: ImageStyle;
   photoShadowStyle: ViewStyle;
@@ -34,6 +35,10 @@ export default StyleSheet.create<Style>({
     left: 0,
     right: 0,
     bottom: 130,
+  },
+  listContainer: {
+    bottom: 24,
+    height: ScreenHeight * 0.45,
   },
   stateViewContainer: {
     backgroundColor: "transparent",

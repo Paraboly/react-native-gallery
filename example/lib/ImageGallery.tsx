@@ -1,5 +1,5 @@
 import * as React from "react";
-import { View, StyleProp, ViewStyle } from "react-native";
+import { View, StyleProp, FlatList, ViewStyle } from "react-native";
 import Spinner from "react-native-spinkit";
 import StateView from "react-native-easy-state-view";
 import ProgressiveFastImage from "@freakycoder/react-native-progressive-fast-image";
@@ -14,24 +14,24 @@ type CustomStyleProp = StyleProp<ViewStyle> | Array<StyleProp<ViewStyle>>;
 
 interface IImageGalleryProps {
   style?: CustomStyleProp;
+  data: Array<any>;
+  listStyle?: CustomStyleProp;
+  listContentContainerStyle?: CustomStyleProp;
   onPress: (index: number) => void;
 }
 
-const ImageGallery: React.FC<IImageGalleryProps> = ({ style, onPress }) => {
-  const [images, setImages] = React.useState<Array<any> | undefined>(undefined);
-
-  // ? Lifecycle: componentDidMount
-  React.useEffect(() => {
-    // fetchImages(taskId).then((imageList: Array<ITaskImage>) =>
-    //   setImages(imageList),
-    // );
-  }, []);
-
+const ImageGallery: React.FC<IImageGalleryProps> = ({
+  style,
+  data,
+  onPress,
+  listStyle,
+  listContentContainerStyle,
+  ...rest
+}) => {
   const renderStateView = () => (
     <View style={styles.stateViewContainer}>
       <StateView
         isCenter
-        shadowColor="#757575"
         title="Nothing found"
         imageStyle={styles.stateViewImageStyle}
         subtitle="We could not find anything in there"
@@ -49,15 +49,14 @@ const ImageGallery: React.FC<IImageGalleryProps> = ({ style, onPress }) => {
       >
         <ProgressiveFastImage
           key={index}
-          borderRadius={16}
           source={item.source}
-          // resizeMode="contain"
           style={styles.photoImageStyle}
           errorSource={require("./default-image.png")}
           loadingSource={{
             uri:
-              "https://thumbs.gfycat.com/GrimyPlainKakarikis-size_restricted.gif",
+              "https://icon-library.com/images/loading-gif-icon/loading-gif-icon-5.jpg",
           }}
+          {...rest}
         />
       </RNBounceable>
     );
@@ -65,11 +64,14 @@ const ImageGallery: React.FC<IImageGalleryProps> = ({ style, onPress }) => {
 
   const renderImageList = () => (
     <FlatList
-      data={images}
+      data={data}
       numColumns={3}
       renderItem={renderItem}
       contentInsetAdjustmentBehavior="automatic"
       contentInset={styles.photoListContentInset}
+      keyExtractor={(index) => index}
+      style={listStyle}
+      contentContainerStyle={listContentContainerStyle}
     />
   );
 
@@ -80,9 +82,8 @@ const ImageGallery: React.FC<IImageGalleryProps> = ({ style, onPress }) => {
   );
 
   const renderImageGallery = () => {
-    if (images === null) return renderSpinner();
-    else if (images && images.length > 0)
-      return <View style={styles.listContainer}>{renderImageList()}</View>;
+    if (data === null) return renderSpinner();
+    else if (data && data.length > 0) return renderImageList();
     else return renderStateView();
   };
 
