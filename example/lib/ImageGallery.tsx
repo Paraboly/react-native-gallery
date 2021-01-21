@@ -52,10 +52,6 @@ const ImageGallery: React.FC<IImageGalleryProps> = ({
           source={item.source}
           style={styles.photoImageStyle}
           errorSource={require("./default-image.png")}
-          loadingSource={{
-            uri:
-              "https://icon-library.com/images/loading-gif-icon/loading-gif-icon-5.jpg",
-          }}
           {...rest}
         />
       </RNBounceable>

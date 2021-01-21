@@ -97,7 +97,7 @@ const App = () => {
             onPress={(itemIndex: number) =>
               console.log("Item Index: ", itemIndex)
             }
-            // loadingSource={<Spinner type="FadingCircle" color="red" />}
+            loadingSource={require("./assets/spinner.gif")}
           />
         </View>
       </SafeAreaView>
