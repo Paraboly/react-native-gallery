@@ -145,7 +145,7 @@ You can checkout the example project 🥰
 Simply run
 
 - `npm i`
-- `npx pod-install` (if it is on iOS)
+- `npx pod-install` (iOS Only)
 - `react-native run-ios/android`
 
 should work of the example project.
