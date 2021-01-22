@@ -166,6 +166,8 @@ should work of the example project.
 | style                     | ViewStyle |  default  | set or override the style object for the main container                 |
 | listStyle                 | ViewStyle |  default  | set or override the style object for the FlatList style                 |
 | listContentContainerStyle | ViewStyle |  default  | set or override the style object for the FlatList contentContainerStyle |
+| defaultImageSource        |   image   |  default  | change the default image source                                         |
+| emptyStateImageSource     |   image   |  default  | change the empty state image source                                     |
 
 ## Future Plans
 

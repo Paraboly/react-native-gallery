@@ -8,9 +8,8 @@ import {
 } from "react-native";
 import Spinner from "react-native-spinkit";
 import StateView from "react-native-easy-state-view";
-import ProgressiveFastImage from "@freakycoder/react-native-progressive-fast-image";
-
 import RNBounceable from "@freakycoder/react-native-bounceable";
+import ProgressiveFastImage from "@freakycoder/react-native-progressive-fast-image";
 /**
  * ? Local Imports
  */
@@ -22,6 +21,8 @@ export interface IImageData {
 }
 
 interface IImageGalleryProps {
+  defaultImageSource?: any;
+  emptyStateImageSource?: any;
   style?: CustomStyleProp;
   listStyle?: CustomStyleProp;
   data?: Array<IImageData> | null;
@@ -34,6 +35,8 @@ const ImageGallery: React.FC<IImageGalleryProps> = ({
   data,
   onPress,
   listStyle,
+  defaultImageSource,
+  emptyStateImageSource,
   listContentContainerStyle,
   ...rest
 }) => {
@@ -44,7 +47,7 @@ const ImageGallery: React.FC<IImageGalleryProps> = ({
         title="Nothing found"
         imageStyle={styles.stateViewImageStyle}
         description="We could not find anything in there"
-        imageSource={require("./state-images.png")}
+        imageSource={emptyStateImageSource || require("./state-images.png")}
       />
     </View>
   );
@@ -60,7 +63,7 @@ const ImageGallery: React.FC<IImageGalleryProps> = ({
           key={index}
           source={item.source}
           style={styles.photoImageStyle}
-          errorSource={require("./default-image.png")}
+          errorSource={defaultImageSource || require("./default-image.png")}
           {...rest}
         />
       </RNBounceable>
