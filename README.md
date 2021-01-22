@@ -4,8 +4,8 @@
 
 [![React Native Gallery](https://img.shields.io/badge/-Easy%20to%20use%20image%20gallery%20with%20React%20Native%20by%20Paraboly-orange?style=for-the-badge)](https://github.com/WrathChaos/react-native-gallery)
 
-[![npm version](https://img.shields.io/npm/v/@paraboly/react-native-gallery.svg?style=for-the-badge)](https://www.npmjs.com/package/react-native-gallery)
-[![npm](https://img.shields.io/npm/dt/@paraboly/react-native-gallery.svg?style=for-the-badge)](https://www.npmjs.com/package/react-native-gallery)
+[![npm version](https://img.shields.io/npm/v/@paraboly/react-native-gallery.svg?style=for-the-badge)](https://www.npmjs.com/package/@paraboly/react-native-gallery)
+[![npm](https://img.shields.io/npm/dt/@paraboly/react-native-gallery.svg?style=for-the-badge)](https://www.npmjs.com/package/@paraboly/react-native-gallery)
 ![Platform - Android and iOS](https://img.shields.io/badge/platform-Android%20%7C%20iOS-blue.svg?style=for-the-badge)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg?style=for-the-badge)](https://github.com/prettier/prettier)
