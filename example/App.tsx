@@ -1,7 +1,7 @@
 import React from "react";
 import { StatusBar, Text, SafeAreaView, View } from "react-native";
 import RNBounceable from "@freakycoder/react-native-bounceable";
-import ImageGallery, { IImageData } from "./build/dist/ImageGallery";
+import ImageGallery, { IImageData } from "@paraboly/react-native-gallery";
 console.disableYellowBox = true;
 
 const staticData: Array<IImageData> = [

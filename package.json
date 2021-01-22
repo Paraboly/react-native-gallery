@@ -1,8 +1,8 @@
 {
   "name": "@paraboly/react-native-gallery",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Easy to use image gallery with React Native by Paraboly",
-  "main": "./build/dist/index.js",
+  "main": "./build/dist/ImageGallery.js",
   "repository": "git@github.com:WrathChaos/@paraboly/react-native-gallery.git",
   "author": "FreakyCoder <kurayogun@gmail.com>",
   "license": "MIT",
