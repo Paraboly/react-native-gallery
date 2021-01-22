@@ -59,15 +59,15 @@ import ImageGallery from "@paraboly/react-native-gallery";
 
 You should use this `source` data object format.
 
-```json
+```javascript
 [
   {
-    "source": { "uri": "" }
+    source: { uri: "" },
   },
   {
-    "source": require("../path")
-  }
-]
+    source: require("../path"),
+  },
+];
 ```
 
 ### <i>Example Array </i>
