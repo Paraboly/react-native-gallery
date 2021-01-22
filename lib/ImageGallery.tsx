@@ -1,5 +1,11 @@
 import * as React from "react";
-import { View, StyleProp, FlatList, ViewStyle } from "react-native";
+import {
+  View,
+  StyleProp,
+  FlatList,
+  ViewStyle,
+  ImageSourcePropType,
+} from "react-native";
 import Spinner from "react-native-spinkit";
 import StateView from "react-native-easy-state-view";
 import ProgressiveFastImage from "@freakycoder/react-native-progressive-fast-image";
@@ -11,10 +17,15 @@ import RNBounceable from "@freakycoder/react-native-bounceable";
 import styles from "./ImageGallery.style";
 
 type CustomStyleProp = StyleProp<ViewStyle> | Array<StyleProp<ViewStyle>>;
+export interface IImageData {
+  source: ImageSourcePropType;
+}
 
 interface IImageGalleryProps {
   style?: CustomStyleProp;
-  data: Array<any>;
+  listStyle?: CustomStyleProp;
+  data?: Array<IImageData> | null;
+  listContentContainerStyle?: CustomStyleProp;
   onPress: (index: number) => void;
 }
 
@@ -22,15 +33,17 @@ const ImageGallery: React.FC<IImageGalleryProps> = ({
   style,
   data,
   onPress,
+  listStyle,
+  listContentContainerStyle,
+  ...rest
 }) => {
   const renderStateView = () => (
     <View style={styles.stateViewContainer}>
       <StateView
         isCenter
-        shadowColor="#757575"
         title="Nothing found"
         imageStyle={styles.stateViewImageStyle}
-        subtitle="We could not find anything in there"
+        description="We could not find anything in there"
         imageSource={require("./state-images.png")}
       />
     </View>
@@ -45,15 +58,10 @@ const ImageGallery: React.FC<IImageGalleryProps> = ({
       >
         <ProgressiveFastImage
           key={index}
-          borderRadius={16}
           source={item.source}
-          // resizeMode="contain"
           style={styles.photoImageStyle}
           errorSource={require("./default-image.png")}
-          loadingSource={{
-            uri:
-              "https://thumbs.gfycat.com/GrimyPlainKakarikis-size_restricted.gif",
-          }}
+          {...rest}
         />
       </RNBounceable>
     );
@@ -63,9 +71,11 @@ const ImageGallery: React.FC<IImageGalleryProps> = ({
     <FlatList
       data={data}
       numColumns={3}
+      style={listStyle}
       renderItem={renderItem}
       contentInsetAdjustmentBehavior="automatic"
       contentInset={styles.photoListContentInset}
+      contentContainerStyle={listContentContainerStyle}
     />
   );
 
@@ -76,9 +86,8 @@ const ImageGallery: React.FC<IImageGalleryProps> = ({
   );
 
   const renderImageGallery = () => {
-    if (data === null) return renderSpinner();
-    else if (data && data.length > 0)
-      return <View style={styles.listContainer}>{renderImageList()}</View>;
+    if (data === null || data === undefined) return renderSpinner();
+    else if (data && data.length > 0) return renderImageList();
     else return renderStateView();
   };
 

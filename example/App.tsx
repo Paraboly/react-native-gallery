@@ -1,10 +1,10 @@
 import React from "react";
-import { StatusBar, SafeAreaView, View } from "react-native";
-import Spinner from "react-native-spinkit";
+import { StatusBar, Text, SafeAreaView, View } from "react-native";
+import RNBounceable from "@freakycoder/react-native-bounceable";
+import ImageGallery, { IImageData } from "./build/dist/ImageGallery";
+console.disableYellowBox = true;
 
-import ImageGallery from "./lib/ImageGallery";
-
-const staticData = [
+const staticData: Array<IImageData> = [
   {
     source: {
       uri:
@@ -81,6 +81,10 @@ const staticData = [
 ];
 
 const App = () => {
+  const [galleryData, setGalleryData] = React.useState<
+    Array<IImageData> | undefined
+  >(undefined);
+
   return (
     <>
       <StatusBar barStyle="dark-content" />
@@ -93,13 +97,61 @@ const App = () => {
       >
         <View style={{ height: 500 }}>
           <ImageGallery
-            data={staticData}
+            data={galleryData}
+            loadingSource={require("./assets/spinner.gif")}
             onPress={(itemIndex: number) =>
               console.log("Item Index: ", itemIndex)
             }
-            loadingSource={require("./assets/spinner.gif")}
           />
         </View>
+
+        <View
+          style={{
+            marginTop: 16,
+            alignItems: "center",
+            justifyContent: "center",
+            width: "70%",
+          }}
+        >
+          <Text style={{ fontWeight: "bold", fontSize: 16 }}>Data</Text>
+          <Text style={{ marginTop: 16 }}>{`${
+            galleryData && galleryData.length > 0
+              ? galleryData
+              : JSON.stringify(galleryData)
+          }`}</Text>
+        </View>
+        <RNBounceable
+          bounceEffect={0.95}
+          style={{
+            height: 50,
+            width: "70%",
+            marginTop: 24,
+            borderRadius: 12,
+            alignItems: "center",
+            justifyContent: "center",
+            backgroundColor: "#ab0011",
+            shadowRadius: 8,
+            shadowOpacity: 0.2,
+            shadowColor: "#757575",
+            shadowOffset: {
+              width: 0,
+              height: 3,
+            },
+          }}
+          onPress={() => {
+            if (galleryData === undefined) {
+              setGalleryData(staticData);
+            } else if (galleryData === staticData) {
+              setGalleryData([]);
+            } else {
+              setGalleryData(undefined);
+            }
+          }}
+        >
+          <Text style={{ color: "#fff", fontWeight: "bold", fontSize: 16 }}>
+            Data State Change
+          </Text>
+        </RNBounceable>
       </SafeAreaView>
     </>
   );

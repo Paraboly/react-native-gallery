@@ -1,11 +1,16 @@
-import { Insets, ViewStyle, StyleSheet, ImageStyle } from "react-native";
-import { ScreenHeight } from "@freakycoder/react-native-helpers";
+import {
+  Insets,
+  ViewStyle,
+  StyleSheet,
+  ImageStyle,
+  Dimensions,
+} from "react-native";
 import { CustomImageStyleProps } from "@freakycoder/react-native-progressive-fast-image";
+const { height: ScreenHeight } = Dimensions.get("screen");
 
 interface Style {
   container: ViewStyle;
   photoListContentInset: Insets;
-  listContainer: ViewStyle;
   stateViewContainer: ViewStyle;
   stateViewImageStyle: ImageStyle;
   photoShadowStyle: ViewStyle;
@@ -36,13 +41,11 @@ export default StyleSheet.create<Style>({
     right: 0,
     bottom: 130,
   },
-  listContainer: {
-    bottom: 24,
-    height: ScreenHeight * 0.45,
-  },
   stateViewContainer: {
     backgroundColor: "transparent",
     height: ScreenHeight * 0.45,
+    alignItems: "center",
+    justifyContent: "center",
   },
   stateViewImageStyle: {
     width: ScreenHeight * 0.3,
@@ -65,7 +68,8 @@ export default StyleSheet.create<Style>({
   },
   spinnerContainer: {
     marginTop: "22%",
-    alignSelf: "center",
+    alignItems: "center",
+    justifyContent: "center",
     height: ScreenHeight * 0.35,
   },
 });
