@@ -4,6 +4,7 @@ import {
   StyleProp,
   FlatList,
   ViewStyle,
+  ImageStyle,
   ImageSourcePropType,
 } from "react-native";
 import Spinner from "react-native-spinkit";
@@ -16,6 +17,9 @@ import ProgressiveFastImage from "@freakycoder/react-native-progressive-fast-ima
 import styles from "./ImageGallery.style";
 
 type CustomStyleProp = StyleProp<ViewStyle> | Array<StyleProp<ViewStyle>>;
+type CustomImageStyleProp =
+  | StyleProp<ImageStyle>
+  | Array<StyleProp<ImageStyle>>;
 export interface IImageData {
   source: ImageSourcePropType;
 }
@@ -25,6 +29,7 @@ interface IImageGalleryProps {
   emptyStateImageSource?: any;
   style?: CustomStyleProp;
   listStyle?: CustomStyleProp;
+  stateViewImageStyle?: CustomImageStyleProp;
   data?: Array<IImageData> | null;
   listContentContainerStyle?: CustomStyleProp;
   onPress: (index: number) => void;
@@ -36,6 +41,7 @@ const ImageGallery: React.FC<IImageGalleryProps> = ({
   onPress,
   listStyle,
   defaultImageSource,
+  stateViewImageStyle,
   emptyStateImageSource,
   listContentContainerStyle,
   ...rest
@@ -45,9 +51,10 @@ const ImageGallery: React.FC<IImageGalleryProps> = ({
       <StateView
         isCenter
         title="Nothing found"
-        imageStyle={styles.stateViewImageStyle}
+        imageStyle={[styles.stateViewImageStyle, stateViewImageStyle]}
         description="We could not find anything in there"
         imageSource={emptyStateImageSource || require("./state-images.png")}
+        {...rest}
       />
     </View>
   );
@@ -79,12 +86,13 @@ const ImageGallery: React.FC<IImageGalleryProps> = ({
       contentInsetAdjustmentBehavior="automatic"
       contentInset={styles.photoListContentInset}
       contentContainerStyle={listContentContainerStyle}
+      {...rest}
     />
   );
 
   const renderSpinner = () => (
     <View style={styles.spinnerContainer}>
-      <Spinner size={50} isVisible type="ChasingDots" color="red" />
+      <Spinner size={50} isVisible type="ChasingDots" color="red" {...rest} />
     </View>
   );
 
