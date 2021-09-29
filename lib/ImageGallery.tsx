@@ -8,7 +8,7 @@ import {
   ImageSourcePropType,
 } from "react-native";
 import Spinner from "react-native-spinkit";
-import StateView from "react-native-easy-state-view";
+import StateView, { IStateViewProps } from "react-native-easy-state-view";
 import RNBounceable from "@freakycoder/react-native-bounceable";
 import ProgressiveFastImage from "@freakycoder/react-native-progressive-fast-image";
 /**
@@ -22,9 +22,10 @@ type CustomImageStyleProp =
   | Array<StyleProp<ImageStyle>>;
 export interface IImageData {
   source: ImageSourcePropType;
+  uri?: string;
 }
 
-interface IImageGalleryProps {
+interface IImageGalleryProps extends IStateViewProps {
   defaultImageSource?: any;
   emptyStateImageSource?: any;
   style?: CustomStyleProp;
@@ -59,8 +60,7 @@ const ImageGallery: React.FC<IImageGalleryProps> = ({
     </View>
   );
 
-  const renderItem = (data: any) => {
-    const { item, index } = data;
+  const renderItem = (item: IImageData, index: number) => {
     return (
       <RNBounceable
         style={styles.photoShadowStyle}
@@ -68,7 +68,7 @@ const ImageGallery: React.FC<IImageGalleryProps> = ({
       >
         <ProgressiveFastImage
           key={index}
-          source={item.source}
+          source={item.source || { uri: item.uri }}
           style={styles.photoImageStyle}
           errorSource={defaultImageSource || require("./default-image.png")}
           {...rest}
@@ -82,7 +82,7 @@ const ImageGallery: React.FC<IImageGalleryProps> = ({
       data={data}
       numColumns={3}
       style={listStyle}
-      renderItem={renderItem}
+      renderItem={({ item, index }) => renderItem(item, index)}
       contentInsetAdjustmentBehavior="automatic"
       contentInset={styles.photoListContentInset}
       contentContainerStyle={listContentContainerStyle}
